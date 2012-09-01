@@ -4,7 +4,6 @@ import de.philinko.bundesliga.manager.business.api.AufstellungService;
 import de.philinko.bundesliga.manager.mappings.Aufstellung;
 import de.philinko.bundesliga.manager.mappings.Kontrahent;
 import de.philinko.bundesliga.manager.mappings.Spieler;
-import java.math.BigDecimal;
 
 /**
  *

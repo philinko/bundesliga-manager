@@ -12,16 +12,13 @@ import javax.persistence.ManyToOne;
  * @author philippe
  */
 @Entity
-public class Aufstellung implements Serializable {
-    @Id
-    private int num;
+public class Bewertung implements Serializable {
     @Id
     private int spieltag;
+    @Id
     @JoinColumn
     @ManyToOne
     private Spieler spieler;
-    @ManyToOne
-    private Kontrahent mitspieler;
     private BigDecimal note = BigDecimal.ZERO;
     private int tore = 0;
     private int gegentore = 0;
@@ -31,30 +28,15 @@ public class Aufstellung implements Serializable {
     private boolean rot = false;
     private boolean unbenotet = true;
 
-    public Aufstellung() {
-    }
-
-    public Aufstellung(int spieltag, Spieler spieler, Kontrahent mitspieler, int num) {
-        this.spieltag = spieltag;
-        this.spieler = spieler;
-        this.mitspieler = mitspieler;
-        this.num = num;
+    public Bewertung() {
     }
 
     public Spieler getSpieler() {
         return spieler;
     }
 
-    public int getNum() {
-        return num;
-    }
-
     public int getSpieltag() {
         return spieltag;
-    }
-
-    public Kontrahent getMitspieler() {
-        return mitspieler;
     }
 
     public BigDecimal getNote() {
@@ -87,10 +69,6 @@ public class Aufstellung implements Serializable {
 
     public boolean isUnbenotet() {
         return unbenotet;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
     }
     
     public void setNote(BigDecimal note) {
@@ -141,7 +119,7 @@ public class Aufstellung implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Aufstellung other = (Aufstellung) obj;
+        final Bewertung other = (Bewertung) obj;
         if (this.spieltag != other.spieltag) {
             return false;
         }
