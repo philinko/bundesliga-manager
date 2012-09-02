@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
@@ -133,6 +134,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
                 toUpdate.setSpieltag(spieltag);
             }
             toUpdate.setNotenBonus(toreBonus.size() == 1 ? BONUS_ALONE : BONUS_NOT_ALONE);
+            result.put(k.getName(), toUpdate);
         }
         for (Kontrahent k : vorlagenBonus) {
             Bonus toUpdate;
@@ -144,6 +146,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
                 toUpdate.setSpieltag(spieltag);
             }
             toUpdate.setNotenBonus(vorlagenBonus.size() == 1 ? BONUS_ALONE : BONUS_NOT_ALONE);
+            result.put(k.getName(), toUpdate);
         }
         for (Kontrahent k : gtBonus) {
             Bonus toUpdate;
@@ -155,6 +158,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
                 toUpdate.setSpieltag(spieltag);
             }
             toUpdate.setNotenBonus(gtBonus.size() == 1 ? BONUS_ALONE : BONUS_NOT_ALONE);
+            result.put(k.getName(), toUpdate);
         }
         if (BONUS_FOR_NOTEN) {
             for (Kontrahent k : notenBonus) {
@@ -167,7 +171,24 @@ public class AuswertungsServiceImpl implements AuswertungsService {
                     toUpdate.setSpieltag(spieltag);
                 }
                 toUpdate.setNotenBonus(notenBonus.size() == 1 ? BONUS_ALONE : BONUS_NOT_ALONE);
+                result.put(k.getName(), toUpdate);
             }
+        }
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            Query delete = em.createQuery("Delete from Bonus where spieltag = :spieltag");
+            delete.executeUpdate();
+            for (Map.Entry<String, Bonus> entry : result.entrySet()) {
+                Bonus bonus = entry.getValue();
+                em.persist(bonus);
+            }
+            transaction.commit();
+        } catch (RuntimeException ex) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw ex;
         }
     }
 }
