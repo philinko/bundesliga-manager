@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -15,11 +15,9 @@ import javax.persistence.ManyToMany;
 public class Vereinszuordnung implements Serializable {
     @Id
     private int id;
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(nullable=false)
     private Spieler spieler;
-    @ManyToMany
-    @JoinColumn(nullable=false)
     private Verein verein;
     @Column(nullable=false)
     private int beginn = 1;

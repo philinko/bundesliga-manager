@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 public class Besitz implements Serializable {
     @Id
     private int id;
-    @JoinColumn(nullable=false)
-    @ManyToOne
     private Kontrahent besitzer;
     @JoinColumn(nullable=false)
     @ManyToOne
@@ -53,6 +51,14 @@ public class Besitz implements Serializable {
 
     public void setEnde(int ende) {
         this.ende = ende;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

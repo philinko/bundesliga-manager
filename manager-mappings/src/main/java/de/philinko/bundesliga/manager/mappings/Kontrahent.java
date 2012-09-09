@@ -1,16 +1,14 @@
 package de.philinko.bundesliga.manager.mappings;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author philippe
  */
-@Entity
+@Embeddable
 public class Kontrahent implements Serializable {
-    @Id
     private String name;
 
     public Kontrahent() {

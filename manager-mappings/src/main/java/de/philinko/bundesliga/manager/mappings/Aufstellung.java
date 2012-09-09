@@ -22,6 +22,9 @@ public class Aufstellung implements Serializable {
     @ManyToOne
     private Kontrahent mitspieler;
 
+    public Aufstellung() {
+    }
+
     public Aufstellung(int spieltag, Spieler spieler, Kontrahent mitspieler, int num) {
         this.num = num;
         this.spieltag = spieltag;
