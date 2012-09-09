@@ -12,4 +12,5 @@ public interface AufstellungService {
     public Aufstellung[] aufstellungAbfragen(int spieltag, Kontrahent mitspieler);
 
     public void aufstellungAktualisieren(int spieltag, Spieler spieler, Kontrahent mitspieler, int posInAufstellung);
+    public Spieler[] aktuelleSpieler(int spieltag, Kontrahent mitspieler);
 }

@@ -56,4 +56,10 @@ public class AufstellungServiceImpl implements AufstellungService {
         Aufstellung aufstellung = new Aufstellung(spieltag, spieler, mitspieler, posInAufstellung);
         em.merge(aufstellung);
     }
+
+    public Spieler[] aktuelleSpieler(int spieltag, Kontrahent mitspieler) {
+        TypedQuery<Spieler> query = em.createQuery("Select s from Spieler s, Besitz b where b.beginn <= :spieltag and b.ende >= :spieltag and b.besitzer = :mitspieler", Spieler.class);
+        query = query.setParameter("spieltag", spieltag).setParameter("mitspieler", mitspieler);
+        return query.getResultList().toArray(new Spieler[22]);
+    }
 }
