@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?component name="Aufstellung" macroURI="Aufstellung.zul"?>
+<?component name="Uebersicht" macroURI="Uebersicht.zul"?>
+<?component name="Auswertung" macroURI="Auswertung.zul"?>
+<?component name="Berichte" macroURI="Berichte.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window title="Bundesliga-Manager">
+        <tabbox>
+            <tabs>
+                <tab label="Übersicht"></tab>
+                <tab label="Aufstellung">
+                </tab>
+                <tab label="Auswertung"></tab>
+                <tab label="Berichte"></tab>
+            </tabs>
+            <tabpanels>
+                <tabpanel>
+                    <Uebersicht/>
+                </tabpanel>
+                <tabpanel>
+                    <Aufstellung/>
+                </tabpanel>
+                <tabpanel>
+                    <Auswertung/>
+                </tabpanel>
+                <tabpanel>
+                    <Berichte/>
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+    </window>
+</zk>
