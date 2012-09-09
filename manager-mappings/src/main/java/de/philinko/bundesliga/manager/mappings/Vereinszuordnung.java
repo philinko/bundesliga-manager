@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -14,8 +15,10 @@ import javax.persistence.JoinColumn;
 public class Vereinszuordnung implements Serializable {
     @Id
     private int id;
+    @ManyToMany
     @JoinColumn(nullable=false)
     private Spieler spieler;
+    @ManyToMany
     @JoinColumn(nullable=false)
     private Verein verein;
     @Column(nullable=false)
@@ -61,5 +64,39 @@ public class Vereinszuordnung implements Serializable {
 
     public void setEnde(int ende) {
         this.ende = ende;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + (this.spieler != null ? this.spieler.hashCode() : 0);
+        hash = 89 * hash + (this.verein != null ? this.verein.hashCode() : 0);
+        hash = 89 * hash + this.beginn;
+        hash = 89 * hash + this.ende;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vereinszuordnung other = (Vereinszuordnung) obj;
+        if (this.spieler != other.spieler && (this.spieler == null || !this.spieler.equals(other.spieler))) {
+            return false;
+        }
+        if (this.verein != other.verein && (this.verein == null || !this.verein.equals(other.verein))) {
+            return false;
+        }
+        if (this.beginn != other.beginn) {
+            return false;
+        }
+        if (this.ende != other.ende) {
+            return false;
+        }
+        return true;
     }
 }

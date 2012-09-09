@@ -54,4 +54,38 @@ public class Besitz implements Serializable {
     public void setEnde(int ende) {
         this.ende = ende;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + (this.besitzer != null ? this.besitzer.hashCode() : 0);
+        hash = 79 * hash + (this.spieler != null ? this.spieler.hashCode() : 0);
+        hash = 79 * hash + this.beginn;
+        hash = 79 * hash + this.ende;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Besitz other = (Besitz) obj;
+        if (this.besitzer != other.besitzer && (this.besitzer == null || !this.besitzer.equals(other.besitzer))) {
+            return false;
+        }
+        if (this.spieler != other.spieler && (this.spieler == null || !this.spieler.equals(other.spieler))) {
+            return false;
+        }
+        if (this.beginn != other.beginn) {
+            return false;
+        }
+        if (this.ende != other.ende) {
+            return false;
+        }
+        return true;
+    }
 }

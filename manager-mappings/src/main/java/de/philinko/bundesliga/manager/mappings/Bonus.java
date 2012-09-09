@@ -67,4 +67,30 @@ public class Bonus {
     public void setNotenBonus(int notenBonus) {
         this.notenBonus = notenBonus;
     }    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.spieltag;
+        hash = 53 * hash + (this.kontrahent != null ? this.kontrahent.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Bonus other = (Bonus) obj;
+        if (this.spieltag != other.spieltag) {
+            return false;
+        }
+        if (this.kontrahent != other.kontrahent && (this.kontrahent == null || !this.kontrahent.equals(other.kontrahent))) {
+            return false;
+        }
+        return true;
+    }
 }

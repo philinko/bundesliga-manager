@@ -60,5 +60,35 @@ public class Aufstellung implements Serializable {
     public void setMitspieler(Kontrahent mitspieler) {
         this.mitspieler = mitspieler;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.spieltag;
+        hash = 71 * hash + (this.spieler != null ? this.spieler.hashCode() : 0);
+        hash = 71 * hash + (this.mitspieler != null ? this.mitspieler.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Aufstellung other = (Aufstellung) obj;
+        if (this.spieltag != other.spieltag) {
+            return false;
+        }
+        if (this.spieler != other.spieler && (this.spieler == null || !this.spieler.equals(other.spieler))) {
+            return false;
+        }
+        if (this.mitspieler != other.mitspieler && (this.mitspieler == null || !this.mitspieler.equals(other.mitspieler))) {
+            return false;
+        }
+        return true;
+    }
     
 }
