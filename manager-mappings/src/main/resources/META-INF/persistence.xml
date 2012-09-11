@@ -8,12 +8,15 @@
     <class>de.philinko.bundesliga.manager.mappings.Bonus</class>
     <class>de.philinko.bundesliga.manager.mappings.Spieler</class>
     <class>de.philinko.bundesliga.manager.mappings.Vereinszuordnung</class>
+    <class>de.philinko.bundesliga.manager.mappings.Kontrahent</class>
+    <class>de.philinko.bundesliga.manager.mappings.Verein</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hagedorn"/>
       <property name="javax.persistence.jdbc.password" value="hundihund1"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.user" value="hagedorn"/>
-      <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
+      <property name="eclipselink.logging.level" value="FINEST"/>
     </properties>
   </persistence-unit>
 </persistence>

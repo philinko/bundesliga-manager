@@ -19,6 +19,10 @@ public class AufstellungController {
 
     private AufstellungService service;
 
+    public AufstellungController() {
+        service = new AufstellungServiceImpl();
+    }
+
     public void aufstellungEintragen(int spieltag, Spieler[] spielerListe, Kontrahent mitspieler) {
         checkSpieltag(spieltag);
         if (spielerListe.length != 11) {
@@ -31,7 +35,7 @@ public class AufstellungController {
         positionsZaehler[3] = 0;
         Aufstellung[] aufstellungen = spielerInAufstellungEintragen(spielerListe, spieltag, mitspieler, positionsZaehler);
         anzahlProPositionPruefen(positionsZaehler);
-        service.aufstellungenSpeichern(aufstellungen);
+        service.aufstellungenSpeichern(spieltag, aufstellungen);
 
     }
 
@@ -45,6 +49,7 @@ public class AufstellungController {
             if (aufstellungen.contains(new Aufstellung(spieltag, spieler, mitspieler, 0))) {
                 toInsert.setEingesetzt(true);
             }
+            result.add(toInsert);
         }
         return result;
     }
@@ -110,5 +115,13 @@ public class AufstellungController {
             }
         }
         return aufstellungen;
+    }
+
+    public int aktuellerSpieltag() {
+        return 1;
+    }
+
+    public List<Kontrahent> getKontrahenten() {
+        return service.mitspielerListe();
     }
 }

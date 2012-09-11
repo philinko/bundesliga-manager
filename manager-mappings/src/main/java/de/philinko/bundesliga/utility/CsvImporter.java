@@ -32,7 +32,7 @@ public class CsvImporter {
         }
         CsvImporter instance = new CsvImporter();
         instance.em = Persistence.createEntityManagerFactory("bundesliga-pu").createEntityManager();
-        //instance.initializeDB();
+        instance.initializeDB();
         instance.importIntoDB(csvFile);
 
     }
@@ -81,7 +81,7 @@ public class CsvImporter {
 
     private void initializeDB() {
         em.getTransaction().begin();
-        String[] mitspieler = new String[]{"Philippe", "Pierre", "Remi", "Roland"};
+        String[] mitspieler = new String[]{"Philippe", "Pierre", "Rémi", "Roland"};
         for (String teilnehmer : mitspieler) {
             Kontrahent kontrahent = new Kontrahent(teilnehmer);
             em.persist(kontrahent);
@@ -113,5 +113,6 @@ public class CsvImporter {
             Verein toStore = new Verein(verein);
             em.persist(toStore);
         }
+        em.getTransaction().commit();
     }
 }

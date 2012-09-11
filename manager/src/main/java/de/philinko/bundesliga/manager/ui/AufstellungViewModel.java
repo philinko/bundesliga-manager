@@ -4,6 +4,7 @@ import de.philinko.bundesliga.dto.AufstellungDTO;
 import de.philinko.bundesliga.manager.business.AufstellungController;
 import de.philinko.bundesliga.manager.mappings.Kontrahent;
 import de.philinko.bundesliga.manager.mappings.Position;
+import de.philinko.bundesliga.manager.mappings.Spieler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -29,37 +30,40 @@ public class AufstellungViewModel {
 
     @Init
     public void initialize() {
-        Kontrahent k = new Kontrahent("Philippe");
-        mitspielerListe = new ArrayList<Kontrahent>();
-        mitspielerListe.add(k);
-        mitspielerListe.add(new Kontrahent("Pierre"));
-        aktuellerMitspieler = k;
-        aktuellerSpieltag = 5;
         spieltage = initializeIntList(34);
-        verfuegbareSpieler = new ArrayList<AufstellungDTO>();
-        AufstellungDTO spieler = new AufstellungDTO(aktuellerSpieltag, "Zidane", Position.MITTELFELD, "Real Madrid", true);
-        spieler.setName("Ronaldo");
-        spieler.setPosition(Position.ANGRIFF);
-        verfuegbareSpieler.add(spieler);
-        spieler = new AufstellungDTO(aktuellerSpieltag, "Ronaldo", Position.ANGRIFF, "Real Madrid", true);
-        spieler.setName("Zidane, Zinedine");
-        spieler.setPosition(Position.MITTELFELD);
-        verfuegbareSpieler.add(spieler);
-        aufgestellteSpieler = new HashSet<AufstellungDTO>();
-        aufgestellteSpieler.add(spieler);
         controller = new AufstellungController();
+        aktuellerSpieltag = controller.aktuellerSpieltag();
+        mitspielerListe = controller.getKontrahenten();
+        aktuellerMitspieler = mitspielerListe.get(1);
+        aufgestellteSpieler = new HashSet<AufstellungDTO>();
+        aufstellungLaden();
     }
 
     @Command
-    @NotifyChange("verfuegbareSpieler,aufgestellteSpieler")
+    @NotifyChange({"verfuegbareSpieler","aufgestellteSpieler"})
     public void aufstellungLaden() {
+        System.err.println("called aufstellungLaden");
         verfuegbareSpieler = controller.spielerListeLaden(aktuellerSpieltag, aktuellerMitspieler);
+        System.err.println("Verfuegbare spieler: " + verfuegbareSpieler.size());
         aufgestellteSpieler.clear();
         for (AufstellungDTO spieler : verfuegbareSpieler) {
             if (spieler.isEingesetzt()) {
                 aufgestellteSpieler.add(spieler);
             }
         }
+    }
+
+    @Command
+    public void aufstellungSpeichern() {
+        if (aufgestellteSpieler.size() != 11) {
+            throw new RuntimeException("Es sind nicht 11 Spieler aufgestellt sondern: " + aufgestellteSpieler.size());
+        }
+        Spieler[] spielerListe = new Spieler[11];
+        int i = 0;
+        for (AufstellungDTO aufstellungsDTO : aufgestellteSpieler) {
+            spielerListe[i++] = aufstellungsDTO.getSpieler();
+        }
+        controller.aufstellungEintragen(aktuellerSpieltag, spielerListe, aktuellerMitspieler);
     }
     
     public int getAktuellerSpieltag() {

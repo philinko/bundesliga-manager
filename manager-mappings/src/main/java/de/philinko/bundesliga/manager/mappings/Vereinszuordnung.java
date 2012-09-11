@@ -18,6 +18,8 @@ public class Vereinszuordnung implements Serializable {
     @ManyToOne
     @JoinColumn(nullable=false)
     private Spieler spieler;
+    @ManyToOne
+    @JoinColumn(nullable=false)
     private Verein verein;
     @Column(nullable=false)
     private int beginn = 1;

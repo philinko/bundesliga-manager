@@ -2,9 +2,9 @@
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <window id="window" title="Aufstellung" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.philinko.bundesliga.manager.ui.AufstellungViewModel')">
         <hbox>
-            <combobox id="mitspielerBox" readonly="true" model="@bind(vm.mitspielerListe)" selectedItem="@bind(vm.aktuellerMitspieler)">
+            <combobox id="mitspielerBox" readonly="true" model="@bind(vm.mitspielerListe)" selectedItem="@bind(vm.aktuellerMitspieler)" onChange="@command('aufstellungLaden')">
             </combobox>
-            <combobox id="spieltagBox" readonly="true" model="@bind(vm.spieltage)" value="@bind(vm.aktuellerSpieltag)">
+            <combobox id="spieltagBox" readonly="true" model="@bind(vm.spieltage)" value="@bind(vm.aktuellerSpieltag)" onChange="@command('aufstellungLaden')">
             </combobox>
         </hbox>
         <vbox>
@@ -24,6 +24,7 @@
                 </template>
 						
             </listbox>
+            <button label="Aufstellung speichern" onClick="@command('aufstellungSpeichern')"></button>
         </vbox>
 
     </window>

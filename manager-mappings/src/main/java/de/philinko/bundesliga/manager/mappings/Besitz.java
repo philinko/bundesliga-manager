@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 public class Besitz implements Serializable {
     @Id
     private int id;
+    @JoinColumn
+    @ManyToOne
     private Kontrahent besitzer;
     @JoinColumn(nullable=false)
     @ManyToOne

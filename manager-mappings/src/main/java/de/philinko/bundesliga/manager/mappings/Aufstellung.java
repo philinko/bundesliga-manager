@@ -19,6 +19,7 @@ public class Aufstellung implements Serializable {
     @JoinColumn
     @ManyToOne
     private Spieler spieler;
+    @JoinColumn
     @ManyToOne
     private Kontrahent mitspieler;
 

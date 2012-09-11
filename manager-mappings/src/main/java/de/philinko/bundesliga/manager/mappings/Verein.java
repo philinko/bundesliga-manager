@@ -1,14 +1,16 @@
 package de.philinko.bundesliga.manager.mappings;
 
 import java.io.Serializable;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author philippe
  */
-@Embeddable
+@Entity
 public class Verein implements Serializable {
+    @Id
     private String name;
 
     public Verein() {}

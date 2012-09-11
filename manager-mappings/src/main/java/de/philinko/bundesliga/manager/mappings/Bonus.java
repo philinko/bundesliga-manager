@@ -1,7 +1,9 @@
 package de.philinko.bundesliga.manager.mappings;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -9,10 +11,11 @@ import javax.persistence.ManyToOne;
  * @author philippe
  */
 @Entity
-public class Bonus {
+public class Bonus implements Serializable{
     @Id
     private int spieltag;
     @Id
+    @JoinColumn
     @ManyToOne
     private Kontrahent kontrahent;
     private int torBonus;
