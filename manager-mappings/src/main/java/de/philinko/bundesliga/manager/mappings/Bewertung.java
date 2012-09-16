@@ -19,16 +19,21 @@ public class Bewertung implements Serializable {
     @JoinColumn
     @ManyToOne
     private Spieler spieler;
-    private BigDecimal note = BigDecimal.ZERO;
+    private BigDecimal note = new BigDecimal("4.0");
     private int tore = 0;
     private int gegentore = 0;
     private int vorlagen = 0;
     private int eigentore = 0;
     private boolean gelb = false;
     private boolean rot = false;
-    private boolean unbenotet = true;
+    private boolean unbenotet = false;
 
     public Bewertung() {
+    }
+
+    public Bewertung(int spieltag, Spieler spieler) {
+        this.spieltag = spieltag;
+        this.spieler = spieler;
     }
 
     public Spieler getSpieler() {
@@ -68,6 +73,9 @@ public class Bewertung implements Serializable {
     }
 
     public boolean isUnbenotet() {
+        if (note.compareTo(new BigDecimal("4.0")) != 0) {
+            unbenotet = false;
+        }
         return unbenotet;
     }
     
@@ -101,6 +109,7 @@ public class Bewertung implements Serializable {
 
     public void setUnbenotet(boolean unbenotet) {
         this.unbenotet = unbenotet;
+        this.note = new BigDecimal("4.0");
     }
 
     @Override

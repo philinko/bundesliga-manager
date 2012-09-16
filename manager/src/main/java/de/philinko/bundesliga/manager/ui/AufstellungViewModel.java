@@ -5,6 +5,7 @@ import de.philinko.bundesliga.manager.business.AufstellungController;
 import de.philinko.bundesliga.manager.mappings.Kontrahent;
 import de.philinko.bundesliga.manager.mappings.Position;
 import de.philinko.bundesliga.manager.mappings.Spieler;
+import de.philinko.bundesliga.utility.CommonFunctions;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.Set;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -30,7 +32,7 @@ public class AufstellungViewModel {
 
     @Init
     public void initialize() {
-        spieltage = initializeIntList(34);
+        spieltage = CommonFunctions.initializeIntList(34);
         controller = new AufstellungController();
         aktuellerSpieltag = controller.aktuellerSpieltag();
         mitspielerListe = controller.getKontrahenten();
@@ -64,6 +66,7 @@ public class AufstellungViewModel {
             spielerListe[i++] = aufstellungsDTO.getSpieler();
         }
         controller.aufstellungEintragen(aktuellerSpieltag, spielerListe, aktuellerMitspieler);
+        Messagebox.show("Aufstellung gespeichert");
     }
     
     public int getAktuellerSpieltag() {
@@ -112,11 +115,4 @@ public class AufstellungViewModel {
         this.aufgestellteSpieler = aufgestellteSpieler;
     }
 
-    private List<Integer> initializeIntList(int size) {
-        List<Integer> result = new ArrayList<Integer>(34);
-        for (int i = 0; i < size; ++i) {
-            result.add(i + 1);
-        }
-        return Collections.unmodifiableList(result);
-    }
 }

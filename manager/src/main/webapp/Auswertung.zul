@@ -1,5 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
-
+    <window id="window" title="Spieler bewerten" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.philinko.bundesliga.manager.ui.BewertungViewModel')">
+        <hbox>
+            <combobox id="vereinBox" readonly="true" model="@bind(vm.vereine)" selectedItem="@bind(vm.aktuellerVerein)" onChange="@command('bewertungenSpeichernUndLaden')">
+            </combobox>
+            <combobox id="spieltagBox" readonly="true" model="@bind(vm.spieltage)" value="@bind(vm.aktuellerSpieltag)" onChange="@command('bewertungenSpeichernUndLaden')">
+            </combobox>
+            <label>Gegentore</label>
+            <intbox value="@bind(vm.gegentore)" onChange="@command('gegentoreEintragen')"/>
+            <button label="Auswertung speichern" onClick="@command('bewertungenSpeichern')"/>
+        </hbox>
+        <vbox>
+            <listbox id="bewertungListe" model="@bind(vm.bewertungListe)">
+                <listhead>
+                    <listheader label="Name"/>
+                    <listheader label="Tore"/>
+                    <listheader label="Vorlagen"/>
+                    <listheader label="Gegentore"/>
+                    <listheader label="Eigentore"/>
+                    <listheader label="Gelb"/>
+                    <listheader label="Rot"/>
+                    <listheader label="Note"/>
+                    <listheader label="unbenotet"/>
+                </listhead>
+                <template name="model">
+                    <listitem>
+                        <listcell label="@bind(each.spieler.name)"/>
+                        <listcell>
+                            <intbox constraint="no negative" value="@bind(each.tore)" />
+                        </listcell>
+                        <listcell>
+                            <intbox constraint="no negative" value="@bind(each.vorlagen)" />
+                        </listcell>
+                        <listcell>
+                            <intbox constraint="no negative" value="@bind(each.gegentore)" />
+                        </listcell>
+                        <listcell>
+                            <intbox constraint="no negative" value="@bind(each.eigentore)" />
+                        </listcell>
+                        <listcell>
+                            <combobox value="@bind(each.gelb)" >
+                                <comboitem label="true"/>
+                                <comboitem label="false"/>
+                            </combobox>
+                        </listcell>
+                        <listcell>
+                            <combobox value="@bind(each.rot)" >
+                                <comboitem label="true"/>
+                                <comboitem label="false"/>
+                            </combobox>
+                        </listcell>
+                        <listcell>
+                            <decimalbox format="#.#" value="@bind(each.note)" />
+                        </listcell>
+                        <listcell>
+                            <combobox value="@bind(each.unbenotet)" >
+                                <comboitem label="true"/>
+                                <comboitem label="false"/>
+                            </combobox>
+                        </listcell>
+                    </listitem>
+                </template>
+						
+            </listbox>
+        </vbox>
+    </window>
 </zk>
