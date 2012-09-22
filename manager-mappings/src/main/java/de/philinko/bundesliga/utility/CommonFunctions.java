@@ -7,6 +7,8 @@ package de.philinko.bundesliga.utility;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -20,5 +22,10 @@ public class CommonFunctions {
             result.add(i + 1);
         }
         return Collections.unmodifiableList(result);
+    }
+
+    public static int aktuellerSpieltag(EntityManager em) {
+        Query query = em.createQuery("Select max(spieltag) from Bewertung");
+        return (Integer) query.getSingleResult();
     }
 }

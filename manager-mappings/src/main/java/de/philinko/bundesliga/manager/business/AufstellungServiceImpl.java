@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.philinko.bundesliga.manager.business;
 
 import de.philinko.bundesliga.manager.business.api.AufstellungService;
@@ -31,6 +27,7 @@ public class AufstellungServiceImpl implements AufstellungService {
             em = emf.createEntityManager();
         }
     }
+
     @PersistenceUnit(name = "bundesliga-pu")
     private EntityManagerFactory emf;
     private EntityManager em;
@@ -68,7 +65,6 @@ public class AufstellungServiceImpl implements AufstellungService {
         TypedQuery<Spieler> query = em.createQuery("Select b.spieler from Besitz b where b.beginn <= :spieltag and b.ende >= :spieltag and b.besitzer = :mitspieler order by b.spieler.position asc", Spieler.class);
         query = query.setParameter("spieltag", spieltag).setParameter("mitspieler", mitspieler);
         Spieler[] result = query.getResultList().toArray(new Spieler[22]);
-        System.err.println("Anzahl aktuelle Spieler: " + result.length);
         return result;
     }
 

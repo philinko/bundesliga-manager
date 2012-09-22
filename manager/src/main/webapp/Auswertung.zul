@@ -52,7 +52,7 @@
                             </combobox>
                         </listcell>
                         <listcell>
-                            <decimalbox format="#.#" value="@bind(each.note)" />
+                            <decimalbox format="#.0" value="@bind(each.note)" />
                         </listcell>
                         <listcell>
                             <combobox value="@bind(each.unbenotet)" >

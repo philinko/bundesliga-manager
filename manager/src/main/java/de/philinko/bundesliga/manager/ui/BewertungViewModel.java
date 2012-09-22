@@ -58,9 +58,10 @@ public class BewertungViewModel {
         bewertungenSpeichern(true);
     }
 
-    public void bewertungenSpeichern(boolean showMessage) {
+    public void bewertungenSpeichern(boolean abschliessen) {
         controller.saveBewertungen(bewertungListe);
-        if (showMessage) {
+        if (abschliessen) {
+            controller.auswertungAbschliessen(this.aktuellerSpieltag);
             Messagebox.show("Auswertung gespeichert");
         }
     }

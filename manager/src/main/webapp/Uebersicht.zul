@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="window" title="Übersicht" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.philinko.bundesliga.manager.ui.AuswertungViewModel')">
+        <vbox>
+            <listbox id="playerList" model="@bind(vm.auswertungen)">
+                <listhead>
+                    <listheader label="Spieltag"/>
+                    <listheader label="Mitspieler"/>
+                    <listheader label="Tore"/>
+                    <listheader label="Vorlagen"/>
+                    <listheader label="Gegentore"/>
+                    <listheader label="Gelbe Karten"/>
+                    <listheader label="Rote Karten"/>
+                    <listheader label="Eigentore"/>
+                    <listheader label="Notenschnitt"/>
+                    <listheader label="Bonuspunkte"/>
+                    <listheader label="Gesamtpunkte"/>
+                </listhead>
+                <template name="model">
+                    <listitem>
+                        <listcell label="@bind(each.spieltag)"/>
+                        <listcell label="@bind(each.mitspieler)"/>
+                        <listcell label="@bind(each.tore)"/>
+                        <listcell label="@bind(each.vorlagen)"/>
+                        <listcell label="@bind(each.gegentore)"/>
+                        <listcell label="@bind(each.gelbeKarten)"/>
+                        <listcell label="@bind(each.roteKarten)"/>
+                        <listcell label="@bind(each.eigentore)"/>
+                        <listcell label="@bind(each.notenschnitt)"/>
+                        <listcell label="@bind(each.bonuspunkte)"/>
+                        <listcell label="@bind(each.gesamtpunkte)"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vbox>
+
+    </window>
 
 </zk>

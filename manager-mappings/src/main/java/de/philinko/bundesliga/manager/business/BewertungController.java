@@ -1,5 +1,6 @@
 package de.philinko.bundesliga.manager.business;
 
+import de.philinko.bundesliga.manager.business.api.AuswertungsService;
 import de.philinko.bundesliga.manager.business.api.BewertungsService;
 import de.philinko.bundesliga.manager.mappings.Bewertung;
 import de.philinko.bundesliga.manager.mappings.Spieler;
@@ -43,5 +44,10 @@ public class BewertungController {
         List<Bewertung> result = new ArrayList<Bewertung>(bewertungen.size());
         result.addAll(bewertungen);
         return result;
+    }
+
+    public void auswertungAbschliessen(int spieltag) {
+        AuswertungsService auswertService = new AuswertungsServiceImpl();
+        auswertService.berechneAuswertungen(spieltag);
     }
 }

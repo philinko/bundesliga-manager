@@ -11,7 +11,8 @@ import javax.persistence.ManyToOne;
  * @author philippe
  */
 @Entity
-public class Bonus implements Serializable{
+public class Bonus implements Serializable {
+
     @Id
     private int spieltag;
     @Id
@@ -69,7 +70,7 @@ public class Bonus implements Serializable{
 
     public void setNotenBonus(int notenBonus) {
         this.notenBonus = notenBonus;
-    }    
+    }
 
     @Override
     public int hashCode() {
@@ -95,5 +96,9 @@ public class Bonus implements Serializable{
             return false;
         }
         return true;
+    }
+
+    public int getGesamtBonus() {
+        return gegentorBonus + notenBonus + torBonus + vorlagenBonus;
     }
 }
