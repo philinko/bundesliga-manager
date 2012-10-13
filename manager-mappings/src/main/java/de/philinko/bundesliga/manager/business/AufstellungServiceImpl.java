@@ -32,10 +32,10 @@ public class AufstellungServiceImpl implements AufstellungService {
     private EntityManagerFactory emf;
     private EntityManager em;
 
-    public void aufstellungenSpeichern(int spieltag, Aufstellung[] aufstellungen) {
+    public void aufstellungenSpeichern(int spieltag, Aufstellung[] aufstellungen, Kontrahent kontrahent) {
         em.getTransaction().begin();
-        Query query = em.createQuery("Delete from Aufstellung a where a.spieltag = :spieltag");
-        query = query.setParameter("spieltag", spieltag);
+        Query query = em.createQuery("Delete from Aufstellung a where a.spieltag = :spieltag and a.mitspieler=:mitspieler");
+        query = query.setParameter("spieltag", spieltag).setParameter("mitspieler", kontrahent);
         query.executeUpdate();
         for (Aufstellung aufstellung : aufstellungen) {
             em.persist(aufstellung);
@@ -73,5 +73,10 @@ public class AufstellungServiceImpl implements AufstellungService {
         CriteriaQuery<Kontrahent> query = cb.createQuery(Kontrahent.class);
         query.from(Kontrahent.class);
         return em.createQuery(query).getResultList();
+    }
+
+    public String vereinVonSpieler(Spieler spieler) {
+        TypedQuery<String> query = em.createQuery("Select v.verein.name from Vereinszuordnung v where v.spieler=:spieler", String.class);
+        return query.setParameter("spieler", spieler).getSingleResult();
     }
 }

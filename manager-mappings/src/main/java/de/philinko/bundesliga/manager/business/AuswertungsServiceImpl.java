@@ -1,12 +1,15 @@
 package de.philinko.bundesliga.manager.business;
 
+import de.philinko.bundesliga.dto.GesamtDTO;
 import de.philinko.bundesliga.manager.business.api.AuswertungsService;
 import de.philinko.bundesliga.manager.mappings.Auswertung;
 import de.philinko.bundesliga.manager.mappings.Bonus;
 import de.philinko.bundesliga.manager.mappings.Kontrahent;
+import de.philinko.bundesliga.manager.mappings.Spieler;
 import de.philinko.bundesliga.utility.CommonFunctions;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -231,7 +234,39 @@ public class AuswertungsServiceImpl implements AuswertungsService {
     }
 
     public List<Auswertung> getAuswertungen() {
-        TypedQuery<Auswertung> query = em.createQuery("Select a from Auswertung a order by a.spieltag asc, a.mitspieler.name asc", Auswertung.class);
+        TypedQuery<Auswertung> query = em.createQuery("Select a from Auswertung a order by a.spieltag desc, a.mitspieler.name asc", Auswertung.class);
         return query.getResultList();
+    }
+
+    public List<GesamtDTO> getGesamt() {
+        Query query = em.createQuery("Select a.mitspieler, sum(a.tore), sum(a.vorlagen), sum(a.gegentore), avg(a.notenschnitt), sum(a.eigentore), sum(a.gesamtpunkte), sum(a.gelbeKarten), sum(a.roteKarten), sum(a.bonuspunkte) from Auswertung a group by a.mitspieler");
+        List<Object> gesamtStand = query.getResultList();
+        List<GesamtDTO> result = new ArrayList(gesamtStand.size());
+        for (Object item : gesamtStand) {
+            Object[] row = (Object[]) item;
+            Kontrahent kontrahent = (Kontrahent) row[0];
+            GesamtDTO auswertung = new GesamtDTO();
+            auswertung.setMitspieler(kontrahent);
+            auswertung.setTore(((Long)row[1]).intValue());
+            auswertung.setVorlagen(((Long)row[2]).intValue());
+            auswertung.setGegentore(((Long)row[3]).intValue());
+            BigDecimal schnitt = new BigDecimal((Double) row[4]);
+            schnitt.setScale(3, RoundingMode.HALF_UP);
+            auswertung.setNotenschnitt(schnitt);
+            auswertung.setEigentore(((Long)row[5]).intValue());
+            auswertung.setGesamtpunkte(((Long)row[6]).intValue());
+            auswertung.setGelbeKarten(((Long)row[7]).intValue());
+            auswertung.setRoteKarten(((Long)row[8]).intValue());
+            auswertung.setBonuspunkte(((Long)row[9]).intValue());
+            result.add(auswertung);
+        }
+        return result;
+    }
+
+    public int gesamtPunkteSpieler(Spieler spieler) {
+        Query query = em.createQuery("Select sum(b.punkte) from Bewertung b where b.spieler = :spieler");
+        query = query.setParameter("spieler", spieler);
+        Long result = (Long) query.getSingleResult();
+        return result.intValue();
     }
 }

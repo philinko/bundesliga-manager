@@ -4,7 +4,7 @@ import de.philinko.bundesliga.manager.mappings.Bewertung;
 import de.philinko.bundesliga.manager.mappings.Spieler;
 import de.philinko.bundesliga.manager.mappings.Verein;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  *
@@ -16,7 +16,7 @@ public interface BewertungsService {
 
     public List<Verein> ladeVereine();
 
-    public Set<Bewertung> bewertungenLaden(int aktuellerSpieltag, Verein aktuellerVerein);
+    public Map<Spieler, Bewertung> bewertungenLaden(int spieltag, Verein verein);
 
     public List<Spieler> spielerVonVereinLaden(int aktuellerSpieltag, Verein aktuellerVerein);
     

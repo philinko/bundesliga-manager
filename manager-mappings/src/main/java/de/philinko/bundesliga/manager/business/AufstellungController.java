@@ -35,7 +35,7 @@ public class AufstellungController {
         positionsZaehler[3] = 0;
         Aufstellung[] aufstellungen = spielerInAufstellungEintragen(spielerListe, spieltag, mitspieler, positionsZaehler);
         anzahlProPositionPruefen(positionsZaehler);
-        service.aufstellungenSpeichern(spieltag, aufstellungen);
+        service.aufstellungenSpeichern(spieltag, aufstellungen, mitspieler);
 
     }
 
@@ -46,6 +46,7 @@ public class AufstellungController {
         aufstellungen.addAll(Arrays.asList(service.aufstellungAbfragen(spieltag, mitspieler)));
         for (Spieler spieler : spielerListe) {
             AufstellungDTO toInsert = new AufstellungDTO(spieltag, spieler.getName(), spieler.getPosition(), "", false);
+            toInsert.setVerein(service.vereinVonSpieler(spieler));
             if (aufstellungen.contains(new Aufstellung(spieltag, spieler, mitspieler, 0))) {
                 toInsert.setEingesetzt(true);
             }

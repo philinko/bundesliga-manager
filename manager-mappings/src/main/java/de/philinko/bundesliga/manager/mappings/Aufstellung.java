@@ -18,6 +18,7 @@ public class Aufstellung implements Serializable {
     private int spieltag;
     @JoinColumn
     @ManyToOne
+    @Id
     private Spieler spieler;
     @JoinColumn
     @ManyToOne

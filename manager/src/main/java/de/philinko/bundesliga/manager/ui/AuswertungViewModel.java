@@ -4,7 +4,9 @@ import de.philinko.bundesliga.dto.GesamtDTO;
 import de.philinko.bundesliga.manager.business.AuswertungsController;
 import de.philinko.bundesliga.manager.mappings.Auswertung;
 import java.util.List;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  *
@@ -20,7 +22,14 @@ public class AuswertungViewModel {
     public void initialize() {
         controller = new AuswertungsController();
         auswertungen = controller.getAuswertungen();
-        //gesamtAuswertungen = controller.getGesamt();
+        gesamtAuswertungen = controller.getGesamt();
+    }
+
+    @Command
+    @NotifyChange({"auswertungen","gesamtAuswertungen"})
+    public void aktualisieren() {
+        auswertungen = controller.getAuswertungen();
+        gesamtAuswertungen = controller.getGesamt();
     }
 
     public List<Auswertung> getAuswertungen() {

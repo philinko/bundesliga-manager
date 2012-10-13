@@ -36,7 +36,7 @@ public class AuswertungsController {
     }
 
     public List<GesamtDTO> getGesamt() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return service.getGesamt();
     }
     
 }

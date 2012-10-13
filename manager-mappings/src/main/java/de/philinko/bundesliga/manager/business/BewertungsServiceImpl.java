@@ -4,9 +4,9 @@ import de.philinko.bundesliga.manager.business.api.BewertungsService;
 import de.philinko.bundesliga.manager.mappings.Bewertung;
 import de.philinko.bundesliga.manager.mappings.Spieler;
 import de.philinko.bundesliga.manager.mappings.Verein;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -58,14 +58,17 @@ public class BewertungsServiceImpl implements BewertungsService {
         return em.createQuery(query).getResultList();
     }
 
-    public Set<Bewertung> bewertungenLaden(int spieltag, Verein verein) {
+    public Map<Spieler, Bewertung> bewertungenLaden(int spieltag, Verein verein) {
         TypedQuery<Bewertung> query = em.createQuery("Select b from Bewertung b, Vereinszuordnung v, Besitz be where "
                 + "b.spieltag=:spieltag and v.verein=:verein and v.spieler=b.spieler "
                 + "and v.beginn<=:spieltag and v.ende>=:spieltag and be.spieler=b.spieler "
                 + "and be.beginn<=:spieltag and be.ende>=:spieltag", Bewertung.class);
         query = query.setParameter("spieltag", spieltag).setParameter("verein", verein);
-        Set<Bewertung> result = new HashSet<Bewertung>();
-        result.addAll(query.getResultList());
+        List<Bewertung> bewertungen = query.getResultList();
+        Map result = new HashMap(bewertungen.size());
+        for (Bewertung bewertung : bewertungen) {
+            result.put(bewertung.getSpieler(), bewertung);
+        }
         return result;
     }
 

@@ -3,11 +3,8 @@ package de.philinko.bundesliga.manager.ui;
 import de.philinko.bundesliga.dto.AufstellungDTO;
 import de.philinko.bundesliga.manager.business.AufstellungController;
 import de.philinko.bundesliga.manager.mappings.Kontrahent;
-import de.philinko.bundesliga.manager.mappings.Position;
 import de.philinko.bundesliga.manager.mappings.Spieler;
 import de.philinko.bundesliga.utility.CommonFunctions;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,9 +41,7 @@ public class AufstellungViewModel {
     @Command
     @NotifyChange({"verfuegbareSpieler","aufgestellteSpieler"})
     public void aufstellungLaden() {
-        System.err.println("called aufstellungLaden");
         verfuegbareSpieler = controller.spielerListeLaden(aktuellerSpieltag, aktuellerMitspieler);
-        System.err.println("Verfuegbare spieler: " + verfuegbareSpieler.size());
         aufgestellteSpieler.clear();
         for (AufstellungDTO spieler : verfuegbareSpieler) {
             if (spieler.isEingesetzt()) {
@@ -106,12 +101,10 @@ public class AufstellungViewModel {
     }
 
     public Set<AufstellungDTO> getAufgestellteSpieler() {
-        System.err.println("Called aufgestellte Spieler. Size: " + aufgestellteSpieler.size());
         return aufgestellteSpieler;
     }
 
     public void setAufgestellteSpieler(Set<AufstellungDTO> aufgestellteSpieler) {
-        System.err.println("Called set aufgestellte Spieler");
         this.aufgestellteSpieler = aufgestellteSpieler;
     }
 
