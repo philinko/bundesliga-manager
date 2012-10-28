@@ -14,12 +14,14 @@
                     <listheader label="Spielername"/>
                     <listheader label="Position"/>
                     <listheader label="Verein"/>
+                    <listheader label="Gesamtpunkte"/>
                 </listhead>
                 <template name="model">
                     <listitem>
                         <listcell label="@bind(each.name)"/>
                         <listcell label="@bind(each.position)"/>
                         <listcell label="@bind(each.verein)"/>
+                        <listcell label="@bind(each.gesamtPunkte)"/>
                     </listitem>
                 </template>
 						

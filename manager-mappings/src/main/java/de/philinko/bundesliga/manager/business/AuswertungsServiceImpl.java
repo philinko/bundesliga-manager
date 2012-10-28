@@ -267,6 +267,6 @@ public class AuswertungsServiceImpl implements AuswertungsService {
         Query query = em.createQuery("Select sum(b.punkte) from Bewertung b where b.spieler = :spieler");
         query = query.setParameter("spieler", spieler);
         Long result = (Long) query.getSingleResult();
-        return result.intValue();
+        return (result == null ? 0 : result.intValue());
     }
 }

@@ -14,6 +14,7 @@ public class AufstellungDTO {
     private Position position;
     private String verein;
     private boolean eingesetzt;
+    private int gesamtPunkte;
 
     public AufstellungDTO(int spieltag, String name, Position position, String verein, boolean eingesetzt) {
         this.spieltag = spieltag;
@@ -28,6 +29,7 @@ public class AufstellungDTO {
         this.name = source.getSpieler().getName();
         this.position = source.getSpieler().getPosition();
         this.eingesetzt = true;
+        this.gesamtPunkte = 0;
     }
 
     public Spieler getSpieler() {
@@ -76,5 +78,13 @@ public class AufstellungDTO {
     public void setEingesetzt(boolean eingesetzt) {
         System.err.println("Called setEingesetzt()");
         this.eingesetzt = eingesetzt;
+    }
+
+    public int getGesamtPunkte() {
+        return gesamtPunkte;
+    }
+
+    public void setGesamtPunkte(int punkte) {
+        this.gesamtPunkte = punkte;
     }
 }

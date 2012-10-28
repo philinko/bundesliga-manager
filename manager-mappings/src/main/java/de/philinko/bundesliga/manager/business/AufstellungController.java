@@ -2,6 +2,7 @@ package de.philinko.bundesliga.manager.business;
 
 import de.philinko.bundesliga.dto.AufstellungDTO;
 import de.philinko.bundesliga.manager.business.api.AufstellungService;
+import de.philinko.bundesliga.manager.business.api.AuswertungsService;
 import de.philinko.bundesliga.manager.mappings.Aufstellung;
 import de.philinko.bundesliga.manager.mappings.Kontrahent;
 import de.philinko.bundesliga.manager.mappings.Spieler;
@@ -18,9 +19,11 @@ import java.util.Set;
 public class AufstellungController {
 
     private AufstellungService service;
+    private AuswertungsService auswertService;
 
     public AufstellungController() {
         service = new AufstellungServiceImpl();
+        auswertService = new AuswertungsServiceImpl();
     }
 
     public void aufstellungEintragen(int spieltag, Spieler[] spielerListe, Kontrahent mitspieler) {
@@ -47,6 +50,7 @@ public class AufstellungController {
         for (Spieler spieler : spielerListe) {
             AufstellungDTO toInsert = new AufstellungDTO(spieltag, spieler.getName(), spieler.getPosition(), "", false);
             toInsert.setVerein(service.vereinVonSpieler(spieler));
+            toInsert.setGesamtPunkte(auswertService.gesamtPunkteSpieler(spieler));
             if (aufstellungen.contains(new Aufstellung(spieltag, spieler, mitspieler, 0))) {
                 toInsert.setEingesetzt(true);
             }
