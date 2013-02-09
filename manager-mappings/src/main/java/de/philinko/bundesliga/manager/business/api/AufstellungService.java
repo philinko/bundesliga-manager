@@ -18,5 +18,5 @@ public interface AufstellungService {
 
     public void aufstellungenSpeichern(int spieltag, Aufstellung[] aufstellungen, Kontrahent kontrahent);
 
-    public String vereinVonSpieler(Spieler spieler);
+    public String vereinVonSpieler(Spieler spieler, int spieltag);
 }

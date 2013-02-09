@@ -49,7 +49,7 @@ public class AufstellungController {
         aufstellungen.addAll(Arrays.asList(service.aufstellungAbfragen(spieltag, mitspieler)));
         for (Spieler spieler : spielerListe) {
             AufstellungDTO toInsert = new AufstellungDTO(spieltag, spieler.getName(), spieler.getPosition(), "", false);
-            toInsert.setVerein(service.vereinVonSpieler(spieler));
+            toInsert.setVerein(service.vereinVonSpieler(spieler, spieltag));
             toInsert.setGesamtPunkte(auswertService.gesamtPunkteSpieler(spieler));
             toInsert.setLetzte3Punkte(auswertService.letzte3PunkteSpieler(spieler));
             if (aufstellungen.contains(new Aufstellung(spieltag, spieler, mitspieler, 0))) {

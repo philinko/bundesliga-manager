@@ -75,8 +75,8 @@ public class AufstellungServiceImpl implements AufstellungService {
         return em.createQuery(query).getResultList();
     }
 
-    public String vereinVonSpieler(Spieler spieler) {
-        TypedQuery<String> query = em.createQuery("Select v.verein.name from Vereinszuordnung v where v.spieler=:spieler", String.class);
-        return query.setParameter("spieler", spieler).getSingleResult();
+    public String vereinVonSpieler(Spieler spieler, int spieltag) {
+        TypedQuery<String> query = em.createQuery("Select v.verein.name from Vereinszuordnung v where v.spieler=:spieler and v.beginn <= :spieltag and v.ende >= :spieltag", String.class);
+        return query.setParameter("spieler", spieler).setParameter("spieltag", spieltag).getSingleResult();
     }
 }

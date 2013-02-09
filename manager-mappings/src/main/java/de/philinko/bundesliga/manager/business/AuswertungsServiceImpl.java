@@ -78,7 +78,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
             toInsert.setVorlagen(((Long)row[2]).intValue());
             toInsert.setGegentore(((Long)row[3]).intValue());
             BigDecimal schnitt = new BigDecimal((Double) row[4]);
-            schnitt.setScale(3, RoundingMode.HALF_UP);
+            schnitt = schnitt.setScale(3, RoundingMode.HALF_UP);
             toInsert.setNotenschnitt(schnitt);
             toInsert.setEigentore(((Long)row[5]).intValue());
             toInsert.setGesamtpunkte(((Long)row[6]).intValue());
@@ -113,7 +113,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
             auswertung.setVorlagen(((Long)row[2]).intValue());
             auswertung.setGegentore(((Long)row[3]).intValue());
             BigDecimal schnitt = new BigDecimal((Double) row[4]);
-            schnitt.setScale(3, RoundingMode.HALF_UP);
+            schnitt = schnitt.setScale(3, RoundingMode.HALF_UP);
             auswertung.setNotenschnitt(schnitt);
             auswertung.setEigentore(((Long)row[5]).intValue());
             auswertung.setGesamtpunkte(((Long)row[6]).intValue());
@@ -290,8 +290,8 @@ public class AuswertungsServiceImpl implements AuswertungsService {
             auswertung.setTore(((Long)row[1]).intValue());
             auswertung.setVorlagen(((Long)row[2]).intValue());
             auswertung.setGegentore(((Long)row[3]).intValue());
-            BigDecimal schnitt = new BigDecimal((Double) row[4]);
-            schnitt.setScale(3, RoundingMode.HALF_UP);
+            BigDecimal schnitt = new BigDecimal(row[4].toString());
+            schnitt = schnitt.setScale(3, RoundingMode.HALF_UP);
             auswertung.setNotenschnitt(schnitt);
             auswertung.setEigentore(((Long)row[5]).intValue());
             auswertung.setGesamtpunkte(((Long)row[6]).intValue());
