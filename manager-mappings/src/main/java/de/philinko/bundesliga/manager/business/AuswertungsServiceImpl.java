@@ -311,7 +311,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
     }
     
 	public int letzte3PunkteSpieler(Spieler spieler) {
-        Query query = em.createQuery("Select sum(b.punkte) from Bewertung b where b.spieler = :spieler where b.spieltag >= :spieltag");
+        Query query = em.createQuery("Select sum(b.punkte) from Bewertung b where b.spieler = :spieler and b.spieltag >= :spieltag");
         query = query.setParameter("spieler", spieler);
         query = query.setParameter("spieltag", aktuellerSpieltag()-3);
         Long result = (Long) query.getSingleResult();

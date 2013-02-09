@@ -6,6 +6,7 @@
             </combobox>
             <combobox id="spieltagBox" readonly="true" model="@bind(vm.spieltage)" value="@bind(vm.aktuellerSpieltag)" onChange="@command('aufstellungLaden')">
             </combobox>
+            <button label="Aufstellung Vorwoche laden" onClick="@command('aufstellungLadenVorwoche')"></button>
         </hbox>
         <vbox>
             <listbox id="playerList" selectedItems="@bind(vm.aufgestellteSpieler)"

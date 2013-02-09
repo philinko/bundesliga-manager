@@ -25,7 +25,7 @@ public class CommonFunctions {
     }
 
     public static int aktuellerSpieltag(EntityManager em) {
-        Query query = em.createQuery("Select max(spieltag) from Bewertung");
+        Query query = em.createQuery("Select max(b.spieltag) from Bewertung b");
         return (Integer) query.getSingleResult();
     }
 }
