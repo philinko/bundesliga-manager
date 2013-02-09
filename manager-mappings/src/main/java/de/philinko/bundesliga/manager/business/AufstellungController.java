@@ -51,6 +51,7 @@ public class AufstellungController {
             AufstellungDTO toInsert = new AufstellungDTO(spieltag, spieler.getName(), spieler.getPosition(), "", false);
             toInsert.setVerein(service.vereinVonSpieler(spieler));
             toInsert.setGesamtPunkte(auswertService.gesamtPunkteSpieler(spieler));
+            toInsert.setLetzte3Punkte(auswertService.letzte3PunkteSpieler(spieler));
             if (aufstellungen.contains(new Aufstellung(spieltag, spieler, mitspieler, 0))) {
                 toInsert.setEingesetzt(true);
             }

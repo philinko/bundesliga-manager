@@ -15,6 +15,7 @@
                     <listheader label="Position"/>
                     <listheader label="Verein"/>
                     <listheader label="Gesamtpunkte"/>
+                    <listheader label="Punkte letzte 3 Spieltage"/>
                 </listhead>
                 <template name="model">
                     <listitem>
@@ -22,6 +23,7 @@
                         <listcell label="@bind(each.position)"/>
                         <listcell label="@bind(each.verein)"/>
                         <listcell label="@bind(each.gesamtPunkte)"/>
+                        <listcell label="@bind(each.letzte3Punkte)"/>
                     </listitem>
                 </template>
 						

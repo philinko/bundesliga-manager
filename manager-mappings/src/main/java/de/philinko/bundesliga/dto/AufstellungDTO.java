@@ -15,6 +15,7 @@ public class AufstellungDTO {
     private String verein;
     private boolean eingesetzt;
     private int gesamtPunkte;
+	private int letzte3Punkte;
 
     public AufstellungDTO(int spieltag, String name, Position position, String verein, boolean eingesetzt) {
         this.spieltag = spieltag;
@@ -87,4 +88,13 @@ public class AufstellungDTO {
     public void setGesamtPunkte(int punkte) {
         this.gesamtPunkte = punkte;
     }
+
+	public int getLetzte3Punkte() {
+		return letzte3Punkte;
+	}
+
+	public void setLetzte3Punkte(int letzte3PunkteSpieler) {
+		this.letzte3Punkte = letzte3PunkteSpieler;
+		
+	}
 }

@@ -1,5 +1,6 @@
 package de.philinko.bundesliga.manager.business;
 
+import de.philinko.bundesliga.dto.AuswertungDTO;
 import de.philinko.bundesliga.dto.GesamtDTO;
 import de.philinko.bundesliga.manager.business.api.AuswertungsService;
 import de.philinko.bundesliga.manager.mappings.Auswertung;
@@ -12,6 +13,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,6 +49,44 @@ public class AuswertungsServiceImpl implements AuswertungsService {
 
     public int aktuellerSpieltag() {
         return CommonFunctions.aktuellerSpieltag(em);
+    }
+    
+    public List<AuswertungDTO> getFussballerAuswertungen(int spieltag, Kontrahent mitspieler) {
+    	Query query;
+        String queryText = "Select a.spieler, sum(b.tore), sum(b.vorlagen), sum(b.gegentore), avg(b.note), sum(b.eigentore), sum(b.punkte), sum(b.gelb), sum(b.rot) from Bewertung b, Aufstellung a where a.spieltag=b.spieltag and a.spieler=b.spieler ";
+        if (mitspieler != null) {
+            queryText += " and kontrahent = :mitspieler ";
+        }
+        if (spieltag != 0) {
+            queryText += " and a.spieltag=:spieltag ";
+        }
+        queryText += " group by a.spieler order by sum(b.punkte) desc";
+        query = em.createQuery(queryText);
+        if (mitspieler != null) {
+            query = query.setParameter("mitspieler", mitspieler);
+        }
+        if (spieltag != 0) {
+            query = query.setParameter("spieltag", spieltag);
+        }
+        List resultList = query.getResultList();
+        List<AuswertungDTO> result = new ArrayList<AuswertungDTO>(resultList.size());
+        for (Iterator it = resultList.iterator(); it.hasNext();) {
+            Object[] row = (Object[]) it.next();
+            AuswertungDTO toInsert = new AuswertungDTO();
+            toInsert.setSpieler((Spieler) row[0]);
+            toInsert.setTore(((Long)row[1]).intValue());
+            toInsert.setVorlagen(((Long)row[2]).intValue());
+            toInsert.setGegentore(((Long)row[3]).intValue());
+            BigDecimal schnitt = new BigDecimal((Double) row[4]);
+            schnitt.setScale(3, RoundingMode.HALF_UP);
+            toInsert.setNotenschnitt(schnitt);
+            toInsert.setEigentore(((Long)row[5]).intValue());
+            toInsert.setGesamtpunkte(((Long)row[6]).intValue());
+            toInsert.setGelbeKarten(((Long)row[7]).intValue());
+            toInsert.setRoteKarten(((Long)row[8]).intValue());
+            result.add(toInsert);
+        }
+        return result;
     }
 
     public void berechneAuswertungen(int letzterSpieltag) {
@@ -269,4 +309,12 @@ public class AuswertungsServiceImpl implements AuswertungsService {
         Long result = (Long) query.getSingleResult();
         return (result == null ? 0 : result.intValue());
     }
+    
+	public int letzte3PunkteSpieler(Spieler spieler) {
+        Query query = em.createQuery("Select sum(b.punkte) from Bewertung b where b.spieler = :spieler where b.spieltag >= :spieltag");
+        query = query.setParameter("spieler", spieler);
+        query = query.setParameter("spieltag", aktuellerSpieltag()-3);
+        Long result = (Long) query.getSingleResult();
+        return (result == null ? 0 : result.intValue());
+	}
 }

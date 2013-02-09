@@ -51,6 +51,23 @@ public class AufstellungViewModel {
     }
 
     @Command
+    @NotifyChange({"verfuegbareSpieler","aufgestellteSpieler"})
+    public void aufstellungLadenVorwoche() {
+        verfuegbareSpieler = controller.spielerListeLaden(aktuellerSpieltag-1, aktuellerMitspieler);
+        aufgestellteSpieler.clear();
+        for (AufstellungDTO spieler : verfuegbareSpieler) {
+            if (spieler.isEingesetzt()) {
+                aufgestellteSpieler.add(spieler);
+            }
+        }
+        if (aufgestellteSpieler.isEmpty()) {
+        	Messagebox.show("Keine Aufstellung für vorherigen Spieltag vorhanden");
+        } else {        
+        	Messagebox.show("Aufstellung des vorherigen Spieltags geladen, aber noch nicht gespeichert!");
+        }
+    }
+
+    @Command
     public void aufstellungSpeichern() {
         if (aufgestellteSpieler.size() != 11) {
             throw new RuntimeException("Es sind nicht 11 Spieler aufgestellt sondern: " + aufgestellteSpieler.size());
