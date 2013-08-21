@@ -64,7 +64,8 @@ public class AufstellungServiceImpl implements AufstellungService {
     public Spieler[] aktuelleSpieler(int spieltag, Kontrahent mitspieler) {
         TypedQuery<Spieler> query = em.createQuery("Select b.spieler from Besitz b where b.beginn <= :spieltag and b.ende >= :spieltag and b.besitzer = :mitspieler order by b.spieler.position asc", Spieler.class);
         query = query.setParameter("spieltag", spieltag).setParameter("mitspieler", mitspieler);
-        Spieler[] result = query.getResultList().toArray(new Spieler[22]);
+        List<Spieler> resultList = query.getResultList();
+        Spieler[] result = resultList.toArray(new Spieler[resultList.size()]);
         return result;
     }
 

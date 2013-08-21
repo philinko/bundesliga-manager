@@ -11,9 +11,6 @@
                     <listheader label="Tore"/>
                     <listheader label="Vorlagen"/>
                     <listheader label="Gegentore"/>
-                    <listheader label="Gelbe Karten"/>
-                    <listheader label="Rote Karten"/>
-                    <listheader label="Eigentore"/>
                     <listheader label="Notenschnitt"/>
                     <listheader label="Bonuspunkte"/>
                     <listheader label="Gesamtpunkte"/>
@@ -24,9 +21,6 @@
                         <listcell label="@bind(each.tore)"/>
                         <listcell label="@bind(each.vorlagen)"/>
                         <listcell label="@bind(each.gegentore)"/>
-                        <listcell label="@bind(each.gelbeKarten)"/>
-                        <listcell label="@bind(each.roteKarten)"/>
-                        <listcell label="@bind(each.eigentore)"/>
                         <listcell label="@bind(each.notenschnitt)"/>
                         <listcell label="@bind(each.bonuspunkte)"/>
                         <listcell label="@bind(each.gesamtpunkte)"/>
@@ -40,9 +34,6 @@
                     <listheader label="Tore"/>
                     <listheader label="Vorlagen"/>
                     <listheader label="Gegentore"/>
-                    <listheader label="Gelbe Karten"/>
-                    <listheader label="Rote Karten"/>
-                    <listheader label="Eigentore"/>
                     <listheader label="Notenschnitt"/>
                     <listheader label="Bonuspunkte"/>
                     <listheader label="Gesamtpunkte"/>
@@ -54,9 +45,6 @@
                         <listcell label="@bind(each.tore)"/>
                         <listcell label="@bind(each.vorlagen)"/>
                         <listcell label="@bind(each.gegentore)"/>
-                        <listcell label="@bind(each.gelbeKarten)"/>
-                        <listcell label="@bind(each.roteKarten)"/>
-                        <listcell label="@bind(each.eigentore)"/>
                         <listcell label="@bind(each.notenschnitt)"/>
                         <listcell label="@bind(each.bonuspunkte)"/>
                         <listcell label="@bind(each.gesamtpunkte)"/>

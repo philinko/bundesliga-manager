@@ -53,7 +53,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
     
     public List<AuswertungDTO> getFussballerAuswertungen(int spieltag, Kontrahent mitspieler) {
     	Query query;
-        String queryText = "Select a.spieler, sum(b.tore), sum(b.vorlagen), sum(b.gegentore), avg(b.note), sum(b.eigentore), sum(b.punkte), sum(b.gelb), sum(b.rot) from Bewertung b, Aufstellung a where a.spieltag=b.spieltag and a.spieler=b.spieler ";
+        String queryText = "Select a.spieler, sum(b.tore), sum(b.vorlagen), sum(b.gegentore), avg(b.note), sum(b.punkte)  from Bewertung b, Aufstellung a where a.spieltag=b.spieltag and a.spieler=b.spieler ";
         if (mitspieler != null) {
             queryText += " and kontrahent = :mitspieler ";
         }
@@ -80,10 +80,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
             BigDecimal schnitt = new BigDecimal((Double) row[4]);
             schnitt = schnitt.setScale(3, RoundingMode.HALF_UP);
             toInsert.setNotenschnitt(schnitt);
-            toInsert.setEigentore(((Long)row[5]).intValue());
-            toInsert.setGesamtpunkte(((Long)row[6]).intValue());
-            toInsert.setGelbeKarten(((Long)row[7]).intValue());
-            toInsert.setRoteKarten(((Long)row[8]).intValue());
+            toInsert.setGesamtpunkte(((Long)row[5]).intValue());
             result.add(toInsert);
         }
         return result;
@@ -95,7 +92,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
         Query delete = em.createQuery("Delete from Auswertung where spieltag=:spieltag");
         delete = delete.setParameter("spieltag", letzterSpieltag);
         delete.executeUpdate();
-        Query query = em.createQuery("Select a.mitspieler, sum(b.tore), sum(b.vorlagen), sum(b.gegentore), avg(b.note), sum(b.eigentore), sum(b.punkte), sum(b.gelb), sum(b.rot) from Bewertung b, Aufstellung a where b.spieltag = :spieltag and a.spieltag=b.spieltag and a.spieler=b.spieler group by a.mitspieler");
+        Query query = em.createQuery("Select a.mitspieler, sum(b.tore), sum(b.vorlagen), sum(b.gegentore), avg(b.note), sum(b.punkte) from Bewertung b, Aufstellung a where b.spieltag = :spieltag and a.spieltag=b.spieltag and a.spieler=b.spieler group by a.mitspieler");
         query = query.setParameter("spieltag", letzterSpieltag);
         Map<Kontrahent, Auswertung> auswertungen = new HashMap<Kontrahent, Auswertung>();
         List resultList = query.getResultList();
@@ -115,10 +112,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
             BigDecimal schnitt = new BigDecimal((Double) row[4]);
             schnitt = schnitt.setScale(3, RoundingMode.HALF_UP);
             auswertung.setNotenschnitt(schnitt);
-            auswertung.setEigentore(((Long)row[5]).intValue());
-            auswertung.setGesamtpunkte(((Long)row[6]).intValue());
-            auswertung.setGelbeKarten(((Long)row[7]).intValue());
-            auswertung.setRoteKarten(((Long)row[8]).intValue());
+            auswertung.setGesamtpunkte(((Long)row[5]).intValue());
         }
         TypedQuery<Bonus> bonusQuery = em.createQuery("Select b from Bonus b where b.spieltag = :spieltag", Bonus.class);
         bonusQuery = bonusQuery.setParameter("spieltag", letzterSpieltag);
@@ -279,7 +273,7 @@ public class AuswertungsServiceImpl implements AuswertungsService {
     }
 
     public List<GesamtDTO> getGesamt() {
-        Query query = em.createQuery("Select a.mitspieler, sum(a.tore), sum(a.vorlagen), sum(a.gegentore), avg(a.notenschnitt), sum(a.eigentore), sum(a.gesamtpunkte), sum(a.gelbeKarten), sum(a.roteKarten), sum(a.bonuspunkte) from Auswertung a group by a.mitspieler");
+        Query query = em.createQuery("Select a.mitspieler, sum(a.tore), sum(a.vorlagen), sum(a.gegentore), avg(a.notenschnitt), sum(a.gesamtpunkte), sum(a.bonuspunkte) from Auswertung a group by a.mitspieler");
         List<Object> gesamtStand = query.getResultList();
         List<GesamtDTO> result = new ArrayList(gesamtStand.size());
         for (Object item : gesamtStand) {
@@ -293,11 +287,8 @@ public class AuswertungsServiceImpl implements AuswertungsService {
             BigDecimal schnitt = new BigDecimal(row[4].toString());
             schnitt = schnitt.setScale(3, RoundingMode.HALF_UP);
             auswertung.setNotenschnitt(schnitt);
-            auswertung.setEigentore(((Long)row[5]).intValue());
-            auswertung.setGesamtpunkte(((Long)row[6]).intValue());
-            auswertung.setGelbeKarten(((Long)row[7]).intValue());
-            auswertung.setRoteKarten(((Long)row[8]).intValue());
-            auswertung.setBonuspunkte(((Long)row[9]).intValue());
+            auswertung.setGesamtpunkte(((Long)row[5]).intValue());
+            auswertung.setBonuspunkte(((Long)row[6]).intValue());
             result.add(auswertung);
         }
         return result;

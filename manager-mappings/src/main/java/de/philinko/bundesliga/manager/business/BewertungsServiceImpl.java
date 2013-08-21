@@ -2,6 +2,7 @@ package de.philinko.bundesliga.manager.business;
 
 import de.philinko.bundesliga.manager.business.api.BewertungsService;
 import de.philinko.bundesliga.manager.mappings.Bewertung;
+import de.philinko.bundesliga.manager.mappings.Position;
 import de.philinko.bundesliga.manager.mappings.Spieler;
 import de.philinko.bundesliga.manager.mappings.Verein;
 import java.util.HashMap;
@@ -42,6 +43,11 @@ public class BewertungsServiceImpl implements BewertungsService {
         for (Bewertung bewertung : bewertungen) {
             query = query.setParameter("spieltag", bewertung.getSpieltag());
             query = query.setParameter("spieler", bewertung.getSpieler());
+            if (bewertung.isUnbenotet() && bewertung.getGegentore() < 2 
+                    && (bewertung.getSpieler().getPosition().equals(Position.ABWEHR)
+                        || bewertung.getSpieler().getPosition().equals(Position.TOR))) {
+                bewertung.setGegentore(2);
+            }
             if (query.getResultList().isEmpty()) {
                 em.persist(bewertung);
             } else {

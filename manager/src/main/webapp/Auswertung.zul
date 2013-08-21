@@ -18,11 +18,8 @@
                     <listheader label="Tore"/>
                     <listheader label="Vorlagen"/>
                     <listheader label="Gegentore"/>
-                    <listheader label="Eigentore"/>
-                    <listheader label="Gelb"/>
-                    <listheader label="Rot"/>
                     <listheader label="Note"/>
-                    <listheader label="unbenotet"/>
+                    <listheader label="nicht gespielt"/>
                 </listhead>
                 <template name="model">
                     <listitem>
@@ -35,21 +32,6 @@
                         </listcell>
                         <listcell>
                             <intbox constraint="no negative" value="@bind(each.gegentore)" />
-                        </listcell>
-                        <listcell>
-                            <intbox constraint="no negative" value="@bind(each.eigentore)" />
-                        </listcell>
-                        <listcell>
-                            <combobox value="@bind(each.gelb)" >
-                                <comboitem label="true"/>
-                                <comboitem label="false"/>
-                            </combobox>
-                        </listcell>
-                        <listcell>
-                            <combobox value="@bind(each.rot)" >
-                                <comboitem label="true"/>
-                                <comboitem label="false"/>
-                            </combobox>
                         </listcell>
                         <listcell>
                             <decimalbox format="#.0" value="@bind(each.note)" />
