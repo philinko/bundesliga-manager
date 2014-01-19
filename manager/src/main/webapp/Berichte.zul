@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
-
+    <window id="window" title="Spieler Bewertungen" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.philinko.bundesliga.manager.ui.BerichtViewModel')">
+        <hbox>
+            <combobox id="mitspielerBox" readonly="true" model="@bind(vm.mitspielerListe)" selectedItem="@bind(vm.ausgewaehlterMitspieler)" onChange="@command('bewertungenAktualisieren')">
+            </combobox>
+            <combobox id="spieltagBox" readonly="true" model="@bind(vm.spieltage)" value="@bind(vm.ausgewaehlterSpieltag)" onChange="@command('bewertungenAktualisieren')">
+            </combobox>
+        </hbox>
+        <vbox>
+            <listbox id="bewertungListe" model="@bind(vm.spielerBewertungen)">
+                <listhead>
+                    <listheader label="Name"/>
+                    <listheader label="Tore"/>
+                    <listheader label="Vorlagen"/>
+                    <listheader label="Gegentore"/>
+                    <listheader label="Note"/>
+                    <listheader label="nicht gespielt"/>
+                    <listheader label="Punkte"/>
+                </listhead>
+                <template name="model">
+                    <listitem>
+                        <listcell label="@bind(each.spieler.name)"/>
+                        <listcell label="@bind(each.tore)" />
+                        <listcell label="@bind(each.vorlagen)" />
+                        <listcell label="@bind(each.gegentore)" />
+                        <listcell label="@bind(each.note)" />
+                        <listcell label="@bind(each.unbenotet)" />
+                        <listcell label="@bind(each.punkte)" />
+                    </listitem>
+                </template>
+            </listbox>
+        </vbox>
+    </window>
 </zk>

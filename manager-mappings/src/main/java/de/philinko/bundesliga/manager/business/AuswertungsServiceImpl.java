@@ -4,6 +4,7 @@ import de.philinko.bundesliga.dto.AuswertungDTO;
 import de.philinko.bundesliga.dto.GesamtDTO;
 import de.philinko.bundesliga.manager.business.api.AuswertungsService;
 import de.philinko.bundesliga.manager.mappings.Auswertung;
+import de.philinko.bundesliga.manager.mappings.Bewertung;
 import de.philinko.bundesliga.manager.mappings.Bonus;
 import de.philinko.bundesliga.manager.mappings.Kontrahent;
 import de.philinko.bundesliga.manager.mappings.Spieler;
@@ -51,22 +52,16 @@ public class AuswertungsServiceImpl implements AuswertungsService {
         return CommonFunctions.aktuellerSpieltag(em);
     }
     
-    public List<AuswertungDTO> getFussballerAuswertungen(int spieltag, Kontrahent mitspieler) {
+    public List<AuswertungDTO> getFussballerAuswertungGesamt(Kontrahent mitspieler) {
     	Query query;
         String queryText = "Select a.spieler, sum(b.tore), sum(b.vorlagen), sum(b.gegentore), avg(b.note), sum(b.punkte)  from Bewertung b, Aufstellung a where a.spieltag=b.spieltag and a.spieler=b.spieler ";
         if (mitspieler != null) {
             queryText += " and kontrahent = :mitspieler ";
         }
-        if (spieltag != 0) {
-            queryText += " and a.spieltag=:spieltag ";
-        }
         queryText += " group by a.spieler order by sum(b.punkte) desc";
         query = em.createQuery(queryText);
         if (mitspieler != null) {
             query = query.setParameter("mitspieler", mitspieler);
-        }
-        if (spieltag != 0) {
-            query = query.setParameter("spieltag", spieltag);
         }
         List resultList = query.getResultList();
         List<AuswertungDTO> result = new ArrayList<AuswertungDTO>(resultList.size());
@@ -308,4 +303,12 @@ public class AuswertungsServiceImpl implements AuswertungsService {
         Long result = (Long) query.getSingleResult();
         return (result == null ? 0 : result.intValue());
 	}
+
+	public List<Bewertung> getFussballerAuswertungen(int spieltag, Kontrahent mitspieler) {
+        TypedQuery<Bewertung> query = em.createQuery("Select a from Bewertung a, Besitz b where a.spieltag = :spieltag and a.spieler=b.spieler and b.besitzer=:mitspieler and b.beginn<=:spieltag and b.ende>=:spieltag order by a.spieler.position", Bewertung.class);
+        query = query.setParameter("spieltag", spieltag);
+        query = query.setParameter("mitspieler", mitspieler);
+        List<Bewertung> bewertungen = query.getResultList();
+        return bewertungen;
+    }
 }

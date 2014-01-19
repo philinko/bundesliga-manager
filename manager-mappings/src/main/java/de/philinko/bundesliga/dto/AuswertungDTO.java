@@ -15,9 +15,6 @@ public class AuswertungDTO {
     private int tore;
     private int vorlagen;
     private int gegentore;
-    private int gelbeKarten;
-    private int roteKarten;
-    private int eigentore;
     private BigDecimal notenschnitt;
     private int gesamtpunkte;
     
@@ -50,24 +47,6 @@ public class AuswertungDTO {
 	}
 	public void setGegentore(int gegentore) {
 		this.gegentore = gegentore;
-	}
-	public int getGelbeKarten() {
-		return gelbeKarten;
-	}
-	public void setGelbeKarten(int gelbeKarten) {
-		this.gelbeKarten = gelbeKarten;
-	}
-	public int getRoteKarten() {
-		return roteKarten;
-	}
-	public void setRoteKarten(int roteKarten) {
-		this.roteKarten = roteKarten;
-	}
-	public int getEigentore() {
-		return eigentore;
-	}
-	public void setEigentore(int eigentore) {
-		this.eigentore = eigentore;
 	}
 	public BigDecimal getNotenschnitt() {
 		return notenschnitt;

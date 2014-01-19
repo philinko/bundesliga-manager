@@ -4,6 +4,8 @@ import de.philinko.bundesliga.dto.AuswertungDTO;
 import de.philinko.bundesliga.dto.GesamtDTO;
 import de.philinko.bundesliga.manager.business.api.AuswertungsService;
 import de.philinko.bundesliga.manager.mappings.Auswertung;
+import de.philinko.bundesliga.manager.mappings.Bewertung;
+import de.philinko.bundesliga.manager.mappings.Kontrahent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +39,10 @@ public class AuswertungsController {
 
     public List<GesamtDTO> getGesamt() {
         return service.getGesamt();
+    }
+
+    public List<Bewertung> getSpielerAuswertungenSpieltag(int spieltag, Kontrahent mitspieler) {
+        return service.getFussballerAuswertungen(spieltag, mitspieler);
     }
     
 }
